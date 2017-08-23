@@ -1,0 +1,31 @@
+CREATE DATABASE `agendamentotransferenciabd` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+CREATE TABLE `agendamento_transferencia` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_conta_origem` bigint(20) NOT NULL,
+  `id_conta_destino` bigint(20) NOT NULL,
+  `taxa` decimal(19,2) NOT NULL,
+  `data_agendamento` datetime NOT NULL,
+  `tipo` varchar(45) NOT NULL,
+  `valor` decimal(19,2) NOT NULL,
+  `status_agendamento` varchar(45) NOT NULL,
+  `data_cadastro` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_id` (`id`),
+  KEY `idx_conta` (`id_conta_origem`,`id_conta_destino`),
+  KEY `idx_data` (`data_agendamento`),
+  KEY `FK_ID_CONTA_DESTINO_idx` (`id_conta_destino`),
+  CONSTRAINT `FK_ID_CONTA_DESTINO` FOREIGN KEY (`id_conta_destino`) REFERENCES `conta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_ID_CONTA_ORIGEM` FOREIGN KEY (`id_conta_origem`) REFERENCES `conta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `conta` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `numero` varchar(45) NOT NULL,
+  `dono` varchar(45) NOT NULL,
+  `saldo` decimal(19,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `numero_UNIQUE` (`numero`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
